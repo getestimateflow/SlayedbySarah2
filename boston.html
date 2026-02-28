@@ -417,14 +417,16 @@
       color: var(--color-text);
     }
 
-    /* Early Booking Bonus */
+    /* Early Booking Bonus (VIP Ticket Style) */
     .boston-bonus-card {
-      background: linear-gradient(135deg, var(--color-primary-subtle), var(--color-blush));
+      background: linear-gradient(135deg, var(--color-bg), #ffffff);
       border-radius: var(--radius-lg);
       padding: var(--space-xl);
       margin-bottom: var(--space-xl);
-      border: 1px solid var(--color-border);
+      border: 2px dashed var(--color-accent);
+      box-shadow: 0 0 20px rgba(196, 139, 124, 0.25);
       text-align: center;
+      position: relative;
     }
 
     .boston-bonus-badge {
@@ -730,7 +732,7 @@
         </p>
         <h1 class="boston-hero-title">I'm Coming<br>Back to Boston</h1>
         <p class="boston-hero-subtitle">Sew-in packages with hair included. Limited slots.</p>
-        <a href="BOOKING_URL" class="btn btn-primary boston-cta">I Want In</a>
+        <a href="BOOKING_URL" class="btn btn-primary boston-cta" id="heroCta">Secure My Flawless Install</a>
         <p class="boston-hero-urgency">Only a handful of spots left</p>
 
         <!-- Dropping Spots Animation -->
@@ -751,7 +753,8 @@
     <section class="boston-showcase section">
       <div class="container">
         <!-- UPDATE: Replace with final video headline before launch -->
-        <h2 class="section-title boston-showcase-title">A lot has changed since your last appointment</h2>
+        <h2 class="section-title boston-showcase-title">My technique has reached a whole new level since I saw you last.
+        </h2>
         <div class="boston-showcase-video">
           <!-- Replace with Sarah's highlight reel before launch -->
           <video src="assets/videos/video1.mp4#t=0.5" autoplay muted loop playsinline preload="metadata"
@@ -779,7 +782,7 @@
       <div class="boston-offer-card">
         <h3>What's Included</h3>
         <ul class="boston-offer-list">
-          <li>Premium hair (16"–26" options)</li>
+          <li><strong>Premium hair (16"–26" options)</strong></li>
           <li>Shampoo & prep</li>
           <li>Precision braided foundation</li>
           <li>Professional weaving net</li>
@@ -789,12 +792,16 @@
         <div class="boston-offer-price">
           <span>Starting at</span>
           <strong>$497</strong>
+          <span
+            style="text-transform:none; font-size:0.8rem; margin-top:5px; color:var(--color-primary); font-weight:600;">(A
+            $750+ value)</span>
         </div>
       </div>
 
       <div class="boston-bonus-card">
-        <div class="boston-bonus-badge">Early Booking Bonus</div>
-        <p>Book before <strong>[CUTOFF DATE]</strong> and get a <strong>complimentary wash, blow dry, and
+        <div class="boston-bonus-badge">VIP Early Booking Bonus</div>
+        <p>Book before <strong style="color: #d9381e;">[CUTOFF DATE]</strong> and get a <strong>complimentary wash, blow
+            dry, and
             layers</strong> included with your install — on the house.</p>
       </div>
 
@@ -815,17 +822,7 @@
     </div>
   </section>
 
-  <!-- Referral -->
-  <section class="boston-referral section">
-    <div class="container">
-      <div class="boston-referral-card">
-        <p class="boston-referral-label">Refer & Earn $50</p>
-        <h3>Know Someone Who Needs a Sew-In?</h3>
-        <p>Refer a friend who books and get <strong>$50 cash</strong> sent straight to your Venmo, CashApp, or Zelle. No
-          limits on referrals.</p>
-      </div>
-    </div>
-  </section>
+
 
   <!-- Urgency -->
   <section class="boston-urgency section">
@@ -867,7 +864,8 @@
           </div>
           <div>
             <strong>Early Bonus Deadline</strong>
-            <p>Book before [CUTOFF DATE] for your free wash, blow dry & layers</p>
+            <p>Book before <strong style="color: #d9381e;">[CUTOFF DATE]</strong> for your free wash, blow dry & layers
+            </p>
           </div>
         </div>
       </div>
@@ -879,7 +877,19 @@
     <div class="container">
       <h2 class="section-title">Ready to Get Slayed?</h2>
       <p class="boston-final-subtitle">Sew-in packages. Hair included. Boston. Late March. Let's go.</p>
-      <a href="BOOKING_URL" class="btn btn-primary boston-cta">I Want In</a>
+      <a href="BOOKING_URL" class="btn btn-primary boston-cta">Secure My Flawless Install</a>
+    </div>
+  </section>
+
+  <!-- Referral -->
+  <section class="boston-referral section">
+    <div class="container">
+      <div class="boston-referral-card">
+        <p class="boston-referral-label">Refer & Earn $50</p>
+        <h3>Know Someone Who Needs a Sew-In?</h3>
+        <p>Refer a friend who books and get <strong>$50 cash</strong> sent straight to your Venmo, CashApp, or Zelle. No
+          limits on referrals.</p>
+      </div>
     </div>
   </section>
 

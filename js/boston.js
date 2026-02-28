@@ -7,18 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Sticky Bottom CTA (appears after scrolling past hero) ---
   const stickyCta = document.getElementById('stickyCta');
-  const hero = document.querySelector('.boston-hero');
+  const heroCta = document.getElementById('heroCta');
 
-  if (stickyCta && hero) {
+  if (stickyCta && heroCta) {
     document.body.classList.add('has-sticky-cta');
 
     const stickyObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
+        // Sticky appears when hero button is not visible
         stickyCta.classList.toggle('visible', !entry.isIntersecting);
       });
-    }, { threshold: 0 });
+    }, { threshold: 0, rootMargin: "-10px 0px 0px 0px" });
 
-    stickyObserver.observe(hero);
+    stickyObserver.observe(heroCta);
   }
 
 

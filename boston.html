@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SlayedbySarah is Coming to Boston | Book Your Sew-In</title>
+  <meta name="description"
+    content="Sarah is back in Boston for a limited time. Book your luxury sew-in package with hair included. Late March only — limited slots available.">
+  <meta property="og:title" content="SlayedbySarah is Coming to Boston">
+  <meta property="og:description" content="Limited sew-in appointments in Boston. Late March only. Hair included.">
+  <meta property="og:type" content="website">
+  <meta name="theme-color" content="#FFF8F5">
+  <meta name="robots" content="noindex, nofollow">
+  <!-- BOOKING: Replace BOOKING_URL with actual Cal.com link before launch -->
+  <!-- VIDEO: Replace assets/videos/video1.mp4 with Sarah's highlight reel before launch -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Montserrat:wght@300;400;500;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <style>
+    /* === Boston Landing Page === */
+
+    body {
+      padding-top: 0;
+    }
+
+    /* Brand Mark */
+    .boston-brand {
+      text-align: center;
+      padding: var(--space-md) var(--space-lg) var(--space-sm);
+    }
+
+    .boston-brand .nav-logo {
+      font-size: 1.75rem;
+      color: var(--color-text);
+    }
+
+    /* Gradient wrapper — one smooth gradient behind hero + showcase */
+    .boston-gradient-flow {
+      background: linear-gradient(180deg,
+          #FFF8F5 0%,
+          #F7E7E4 10%,
+          #F2D7D5 22%,
+          #E8C8C4 34%,
+          #DEB8B3 44%,
+          #E8C8C4 52%,
+          #F2D7D5 62%,
+          #F7E7E4 74%,
+          #FFF8F5 88%,
+          #fff 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .boston-gradient-flow::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C48B7C' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+
+    /* Hero — transparent, sits inside gradient wrapper */
+    .boston-hero {
+      background: transparent;
+      text-align: center;
+      padding: var(--space-md) var(--space-lg) var(--space-lg);
+      position: relative;
+    }
+
+    .boston-hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* === Hero entrance animations === */
+    @keyframes heroFadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .boston-hero-location,
+    .boston-hero-title,
+    .boston-hero-subtitle,
+    .boston-hero .boston-cta,
+    .boston-hero-urgency {
+      opacity: 0;
+      animation: heroFadeUp 0.7s ease-out forwards;
+    }
+
+    .boston-hero-location {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--color-accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: var(--space-sm);
+      animation-delay: 0.1s;
+    }
+
+    .boston-hero-title {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--color-text);
+      line-height: 1.1;
+      margin-bottom: var(--space-sm);
+      animation-delay: 0.3s;
+    }
+
+    .boston-hero-subtitle {
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-lg);
+      line-height: 1.5;
+      animation-delay: 0.5s;
+    }
+
+    /* Full-width CTA on mobile — flex keeps text centered */
+    .boston-cta {
+      display: flex;
+      width: 100%;
+      min-height: 52px;
+      font-size: 0.95rem;
+      padding: 0.9rem 2rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    .boston-hero .boston-cta {
+      animation-delay: 0.7s;
+    }
+
+    /* Urgency line with delayed highlight scribble */
+    .boston-hero-urgency {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-top: var(--space-md);
+      animation-delay: 0.9s;
+      position: relative;
+      display: inline-block;
+    }
+
+    /* Highlighter mark behind text — draws itself after page loads */
+    .boston-hero-urgency::after {
+      content: '';
+      position: absolute;
+      left: -4px;
+      right: -4px;
+      bottom: 0;
+      height: 55%;
+      background: rgba(222, 184, 179, 0.35);
+      border-radius: 3px;
+      z-index: -1;
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: highlightDraw 0.6s ease-out 2.2s forwards;
+    }
+
+    @keyframes highlightDraw {
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* === Dropping Spots Animation === */
+    .spots-animation-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 1.5rem;
+      position: relative;
+      opacity: 0;
+      animation: heroFadeUp 0.7s ease-out 1.2s forwards;
+      /* Fades in after the urgency text */
+    }
+
+    .hands-icon {
+      width: 133px;
+      height: 90px;
+      background-color: var(--color-primary);
+      /* Rose gold match */
+      -webkit-mask-image: url('assets/hands-mask.png?v=2');
+      -webkit-mask-size: contain;
+      -webkit-mask-position: center bottom;
+      -webkit-mask-repeat: no-repeat;
+      mask-image: url('assets/hands-mask.png?v=2');
+      mask-size: contain;
+      mask-position: center bottom;
+      mask-repeat: no-repeat;
+      position: relative;
+      z-index: 2;
+    }
+
+    .dropping-spots {
+      position: absolute;
+      top: -30px;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      justify-content: center;
+      z-index: 1;
+    }
+
+    .spot {
+      background-color: var(--color-primary);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      position: absolute;
+      opacity: 0;
+      animation: dropSpot 2s infinite cubic-bezier(0.55, 0.085, 0.68, 0.53);
+    }
+
+    .spot:nth-child(1) {
+      left: 15px;
+      animation-delay: 0s;
+    }
+
+    .spot:nth-child(2) {
+      left: 28px;
+      animation-delay: 0.4s;
+      width: 4px;
+      height: 4px;
+    }
+
+    .spot:nth-child(3) {
+      left: 42px;
+      animation-delay: 0.8s;
+      width: 6px;
+      height: 6px;
+    }
+
+    .spot:nth-child(4) {
+      left: 20px;
+      animation-delay: 1.2s;
+      width: 3px;
+      height: 3px;
+    }
+
+    .spot:nth-child(5) {
+      left: 35px;
+      animation-delay: 1.6s;
+    }
+
+    @keyframes dropSpot {
+      0% {
+        transform: translateY(-20px) scale(0);
+        opacity: 0;
+      }
+
+      20% {
+        transform: translateY(0px) scale(1);
+        opacity: 1;
+      }
+
+      80% {
+        transform: translateY(55px) scale(1);
+        opacity: 1;
+      }
+
+      100% {
+        transform: translateY(70px) scale(0);
+        opacity: 0;
+      }
+    }
+
+    /* === Showcase Video Section — seamless gradient from hero === */
+    .boston-showcase {
+      background: transparent;
+      text-align: center;
+      padding: var(--space-md) 0 0;
+    }
+
+    .boston-showcase-title {
+      text-align: center;
+      font-size: 1.4rem;
+      margin-bottom: var(--space-lg);
+    }
+
+    .boston-showcase-video {
+      max-width: 420px;
+      margin: 0 auto;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0, 0, 0, 0.12);
+      position: relative;
+      background: linear-gradient(135deg, var(--color-primary-subtle), var(--color-blush));
+    }
+
+    .boston-showcase-video video {
+      display: block;
+      width: 100%;
+      max-height: 560px;
+      object-fit: cover;
+      border-radius: var(--radius-lg);
+    }
+
+    /* Muted indicator */
+    .boston-unmute-hint {
+      position: absolute;
+      bottom: var(--space-md);
+      right: var(--space-md);
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      color: #fff;
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 0.3rem 0.7rem;
+      border-radius: var(--radius-full);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      transition: opacity var(--transition-base);
+    }
+
+    .boston-unmute-hint.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* === Smooth section transitions via gradient backgrounds === */
+
+    /* Offer: white → fades into pink (raffle) at bottom */
+    .boston-offer {
+      background: linear-gradient(180deg,
+          #FFFFFF 0%,
+          #FFFFFF 70%,
+          #F5E6E0 100%);
+      padding-top: var(--space-xl);
+    }
+
+    .boston-offer .section-label,
+    .boston-offer .section-title {
+      text-align: center;
+    }
+
+    /* Center "Everything you need" between video and card */
+    .boston-offer .section-title {
+      margin-bottom: var(--space-xl);
+    }
+
+    .boston-offer-card {
+      background: var(--color-bg);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--color-border-light);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-lg);
+    }
+
+    .boston-offer-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-md);
+    }
+
+    .boston-offer-list li {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      padding: var(--space-xs) 0;
+      padding-left: var(--space-lg);
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .boston-offer-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 11px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-primary-light);
+    }
+
+    .boston-offer-price {
+      margin-top: var(--space-lg);
+      padding-top: var(--space-lg);
+      border-top: 1px solid var(--color-border);
+      text-align: center;
+    }
+
+    .boston-offer-price span {
+      display: block;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--color-text-muted);
+      margin-bottom: 2px;
+    }
+
+    .boston-offer-price strong {
+      font-family: var(--font-heading);
+      font-size: 2rem;
+      color: var(--color-text);
+    }
+
+    /* Early Booking Bonus */
+    .boston-bonus-card {
+      background: linear-gradient(135deg, var(--color-primary-subtle), var(--color-blush));
+      border-radius: var(--radius-lg);
+      padding: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      border: 1px solid var(--color-border);
+      text-align: center;
+    }
+
+    .boston-bonus-badge {
+      display: inline-block;
+      font-size: 0.68rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.85rem;
+      border-radius: var(--radius-full);
+      background: linear-gradient(135deg, var(--color-primary), var(--color-accent));
+      color: white;
+      margin-bottom: var(--space-md);
+    }
+
+    .boston-bonus-card p {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Raffle: pink throughout, fades to white at bottom */
+    .boston-raffle {
+      background: linear-gradient(180deg,
+          #F5E6E0 0%,
+          #F5E6E0 65%,
+          #FFF8F5 100%);
+    }
+
+    .boston-raffle-card {
+      text-align: center;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .boston-raffle-card .section-label,
+    .boston-raffle-card .section-title {
+      text-align: center;
+    }
+
+    /* Animated "You Could Win" */
+    .boston-raffle-card .section-label {
+      animation: winPulse 2.8s ease-in-out infinite;
+      display: inline-block;
+    }
+
+    @keyframes winPulse {
+
+      0%,
+      100% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.08);
+      }
+    }
+
+    .boston-raffle-detail {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+      margin-bottom: var(--space-sm);
+    }
+
+    .boston-raffle-note {
+      font-size: 0.82rem;
+      color: var(--color-text-muted);
+      font-style: italic;
+    }
+
+    /* Referral: white, fades into surface at bottom */
+    .boston-referral {
+      background: linear-gradient(180deg,
+          #FFF8F5 0%,
+          #FFF8F5 70%,
+          #FFFFFF 100%);
+    }
+
+    .boston-referral-card {
+      background: #fdf0ee;
+      border-radius: var(--radius-lg);
+      border: 1px solid rgba(180, 120, 110, 0.25);
+      padding: var(--space-xl);
+      text-align: center;
+    }
+
+    .boston-referral-label {
+      display: inline-block;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .boston-referral-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: var(--space-sm);
+    }
+
+    .boston-referral-card p {
+      font-size: 0.88rem;
+      color: var(--color-text-secondary);
+      line-height: 1.7;
+    }
+
+    /* Urgency: white, fades into pink at bottom for final CTA */
+    .boston-urgency {
+      background: linear-gradient(180deg,
+          #FFFFFF 0%,
+          #FFFFFF 70%,
+          #FFF8F5 100%);
+    }
+
+    .boston-urgency .section-title {
+      text-align: center;
+    }
+
+    .boston-urgency-points {
+      display: grid;
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .boston-urgency-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-md);
+    }
+
+    .boston-urgency-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      color: var(--color-accent);
+    }
+
+    .boston-urgency-item strong {
+      display: block;
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--color-text);
+      margin-bottom: 2px;
+    }
+
+    .boston-urgency-item p {
+      font-size: 0.85rem;
+      color: var(--color-text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Final CTA: fades in from white, goes pink */
+    .boston-final-cta {
+      background: linear-gradient(180deg, #FFF8F5 0%, #F7E7E4 30%, #F2D7D5 100%);
+      text-align: center;
+    }
+
+    .boston-final-subtitle {
+      font-size: 0.95rem;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-xl);
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Sticky Bottom CTA (mobile only) */
+    .boston-sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 999;
+      background: rgba(255, 248, 245, 0.95);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid var(--color-border);
+      padding: var(--space-sm) var(--space-lg);
+      transform: translateY(100%);
+      transition: transform var(--transition-base);
+    }
+
+    .boston-sticky-cta.visible {
+      transform: translateY(0);
+    }
+
+    .boston-sticky-cta .btn {
+      display: flex;
+      width: 100%;
+      min-height: 48px;
+      font-size: 0.9rem;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+    }
+
+    /* Add bottom padding so footer isn't hidden behind sticky bar */
+    body.has-sticky-cta {
+      padding-bottom: 72px;
+    }
+
+    /* Simplified footer override */
+    .boston-footer .footer-content {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    /* === Mobile: urgency min size === */
+    @media (max-width: 390px) {
+      .boston-hero-urgency {
+        font-size: 0.875rem;
+      }
+    }
+
+    /* === Desktop === */
+    @media (min-width: 769px) {
+      .boston-hero {
+        padding: var(--space-3xl) var(--space-lg) var(--space-xl);
+      }
+
+      .boston-showcase-title {
+        font-size: 1.8rem;
+      }
+
+      .boston-hero-title {
+        font-size: 3.2rem;
+      }
+
+      .boston-hero-subtitle {
+        font-size: 1.05rem;
+      }
+
+      .boston-cta {
+        display: inline-flex;
+        width: auto;
+        min-width: 320px;
+      }
+
+      .boston-showcase-video {
+        max-width: 500px;
+      }
+
+      .boston-offer-card {
+        max-width: 550px;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: var(--space-lg);
+      }
+
+      .boston-bonus-card {
+        max-width: 550px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .boston-urgency-points {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      /* Hide sticky CTA on desktop */
+      .boston-sticky-cta {
+        display: none;
+      }
+
+      body.has-sticky-cta {
+        padding-bottom: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Brand Mark -->
+  <div class="boston-brand">
+    <a href="/" class="nav-logo">SlayedbySarah</a>
+  </div>
+
+  <!-- Gradient wrapper: hero + showcase flow as one -->
+  <div class="boston-gradient-flow">
+
+    <!-- Hero -->
+    <header class="boston-hero">
+      <div class="boston-hero-content">
+        <p class="boston-hero-location">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
+          Boston &middot; Late March
+        </p>
+        <h1 class="boston-hero-title">I'm Coming<br>Back to Boston</h1>
+        <p class="boston-hero-subtitle">Sew-in packages with hair included. Limited slots.</p>
+        <a href="BOOKING_URL" class="btn btn-primary boston-cta">I Want In</a>
+        <p class="boston-hero-urgency">Only a handful of spots left</p>
+
+        <!-- Dropping Spots Animation -->
+        <div class="spots-animation-container">
+          <div class="dropping-spots">
+            <div class="spot"></div>
+            <div class="spot"></div>
+            <div class="spot"></div>
+            <div class="spot"></div>
+            <div class="spot"></div>
+          </div>
+          <div class="hands-icon"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Showcase Video -->
+    <section class="boston-showcase section">
+      <div class="container">
+        <!-- UPDATE: Replace with final video headline before launch -->
+        <h2 class="section-title boston-showcase-title">A lot has changed since your last appointment</h2>
+        <div class="boston-showcase-video">
+          <!-- Replace with Sarah's highlight reel before launch -->
+          <video src="assets/videos/video1.mp4#t=0.5" autoplay muted loop playsinline preload="metadata"
+            aria-label="SlayedbySarah recent work highlights"></video>
+          <div class="boston-unmute-hint" id="unmuteHint">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M11 5L6 9H2v6h4l5 4V5z" />
+              <line x1="23" y1="9" x2="17" y2="15" />
+              <line x1="17" y1="9" x2="23" y2="15" />
+            </svg>
+            Tap to unmute
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- end .boston-gradient-flow -->
+
+  <!-- Offer -->
+  <section class="boston-offer section">
+    <div class="container">
+      <p class="section-label">The Package</p>
+      <h2 class="section-title">Everything You Need, One Price</h2>
+
+      <div class="boston-offer-card">
+        <h3>What's Included</h3>
+        <ul class="boston-offer-list">
+          <li>Premium hair (16"–26" options)</li>
+          <li>Shampoo & prep</li>
+          <li>Precision braided foundation</li>
+          <li>Professional weaving net</li>
+          <li>Full sew-in installation</li>
+          <li>Natural luxury styling</li>
+        </ul>
+        <div class="boston-offer-price">
+          <span>Starting at</span>
+          <strong>$497</strong>
+        </div>
+      </div>
+
+      <div class="boston-bonus-card">
+        <div class="boston-bonus-badge">Early Booking Bonus</div>
+        <p>Book before <strong>[CUTOFF DATE]</strong> and get a <strong>complimentary wash, blow dry, and
+            layers</strong> included with your install — on the house.</p>
+      </div>
+
+      <a href="BOOKING_URL" class="btn btn-primary boston-cta">Book Now & Get the Bonus</a>
+    </div>
+  </section>
+
+  <!-- Raffle -->
+  <section class="boston-raffle section">
+    <div class="container">
+      <div class="boston-raffle-card">
+        <p class="section-label">You Could Win</p>
+        <h2 class="section-title">Free Coloring Service</h2>
+        <p class="boston-raffle-detail">Every booked client is automatically entered for a chance to win a <strong>free
+            coloring service</strong> — a <strong>$200+ value</strong>. No extra steps.</p>
+        <p class="boston-raffle-note">Book your sew-in and you're in.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Referral -->
+  <section class="boston-referral section">
+    <div class="container">
+      <div class="boston-referral-card">
+        <p class="boston-referral-label">Refer & Earn $50</p>
+        <h3>Know Someone Who Needs a Sew-In?</h3>
+        <p>Refer a friend who books and get <strong>$50 cash</strong> sent straight to your Venmo, CashApp, or Zelle. No
+          limits on referrals.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Urgency -->
+  <section class="boston-urgency section">
+    <div class="container">
+      <h2 class="section-title">Don't Wait on This</h2>
+      <div class="boston-urgency-points">
+        <div class="boston-urgency-item">
+          <div class="boston-urgency-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+              <line x1="16" y1="2" x2="16" y2="6" />
+              <line x1="8" y1="2" x2="8" y2="6" />
+              <line x1="3" y1="10" x2="21" y2="10" />
+            </svg>
+          </div>
+          <div>
+            <strong>Limited Window</strong>
+            <p>Late March only — roughly 10 days in Boston</p>
+          </div>
+        </div>
+        <div class="boston-urgency-item">
+          <div class="boston-urgency-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+          </div>
+          <div>
+            <strong>Limited Slots</strong>
+            <p>Each install takes hours. Only so many appointments fit in a trip.</p>
+          </div>
+        </div>
+        <div class="boston-urgency-item">
+          <div class="boston-urgency-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path
+                d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84a5.5 5.5 0 0 0 0-7.78z" />
+            </svg>
+          </div>
+          <div>
+            <strong>Early Bonus Deadline</strong>
+            <p>Book before [CUTOFF DATE] for your free wash, blow dry & layers</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="boston-final-cta section">
+    <div class="container">
+      <h2 class="section-title">Ready to Get Slayed?</h2>
+      <p class="boston-final-subtitle">Sew-in packages. Hair included. Boston. Late March. Let's go.</p>
+      <a href="BOOKING_URL" class="btn btn-primary boston-cta">I Want In</a>
+    </div>
+  </section>
+
+  <!-- Sticky Bottom CTA (mobile only, appears after scrolling past hero) -->
+  <div class="boston-sticky-cta" id="stickyCta">
+    <a href="BOOKING_URL" class="btn btn-primary">Book Now — Limited Spots</a>
+  </div>
+
+  <!-- Footer (simplified) -->
+  <footer class="footer boston-footer">
+    <div class="container">
+      <div class="footer-content">
+        <div class="footer-brand">
+          <span class="footer-logo">SlayedbySarah</span>
+          <p class="footer-tagline">Enhancing confidence one slay at a time</p>
+        </div>
+        <p class="footer-copy">&copy; 2026 SlayedbySarah. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/boston.js"></script>
+</body>
+
+</html>

@@ -74,6 +74,9 @@
     .boston-hero-content {
       position: relative;
       z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     /* === Hero entrance animations === */
@@ -144,6 +147,11 @@
 
     .boston-hero .boston-cta {
       animation-delay: 0.7s;
+    }
+
+    /* CTA between offer card and bonus card */
+    .boston-offer .boston-cta {
+      margin-bottom: var(--space-lg);
     }
 
     /* Urgency line with delayed highlight scribble */
@@ -308,8 +316,7 @@
     .boston-showcase-video video {
       display: block;
       width: 100%;
-      max-height: 560px;
-      object-fit: cover;
+      object-fit: contain;
       border-radius: var(--radius-lg);
     }
 
@@ -359,12 +366,18 @@
       margin-bottom: var(--space-xl);
     }
 
+    /* Center entire offer container so CTA + cards align */
+    .boston-offer .container {
+      text-align: center;
+    }
+
     .boston-offer-card {
       background: var(--color-bg);
       border-radius: var(--radius-lg);
       border: 1px solid var(--color-border-light);
       padding: var(--space-xl);
       margin-bottom: var(--space-lg);
+      text-align: center;
     }
 
     .boston-offer-card h3 {
@@ -373,6 +386,12 @@
       font-weight: 600;
       color: var(--color-text);
       margin-bottom: var(--space-md);
+      text-align: center;
+    }
+
+    .boston-offer-list {
+      display: inline-block;
+      text-align: left;
     }
 
     .boston-offer-list li {
@@ -539,10 +558,11 @@
       line-height: 1.7;
     }
 
-    /* Urgency: white, fades into pink at bottom for final CTA */
+    /* Urgency: blends from raffle pink into white, then fades into pink at bottom for final CTA */
     .boston-urgency {
       background: linear-gradient(180deg,
-          #FFFFFF 0%,
+          #FFF8F5 0%,
+          #FFFFFF 30%,
           #FFFFFF 70%,
           #FFF8F5 100%);
     }
@@ -732,7 +752,7 @@
         </p>
         <h1 class="boston-hero-title">I'm Coming<br>Back to Boston</h1>
         <p class="boston-hero-subtitle">Sew-in packages with hair included. Limited slots.</p>
-        <a href="https://cal.com/slayedbysarah/boston-sew-in" class="btn btn-primary boston-cta" id="heroCta">Secure My Flawless Install</a>
+        <a href="https://cal.com/slayedbysarah1/boston-sew-in" class="btn btn-primary boston-cta" id="heroCta">Secure My Flawless Install</a>
         <p class="boston-hero-urgency">Only a handful of spots left</p>
 
         <!-- Dropping Spots Animation -->
@@ -798,14 +818,14 @@
         </div>
       </div>
 
+      <a href="https://cal.com/slayedbysarah1/boston-sew-in" class="btn btn-primary boston-cta">Book Now & Get the Bonus</a>
+
       <div class="boston-bonus-card">
         <div class="boston-bonus-badge">VIP Early Booking Bonus</div>
         <p>Book before <strong style="color: #d9381e;">March 15th</strong> and get a <strong>complimentary wash, blow
             dry, and
             layers</strong> included with your install — on the house.</p>
       </div>
-
-      <a href="https://cal.com/slayedbysarah/boston-sew-in" class="btn btn-primary boston-cta">Book Now & Get the Bonus</a>
     </div>
   </section>
 
@@ -877,7 +897,7 @@
     <div class="container">
       <h2 class="section-title">Ready to Get Slayed?</h2>
       <p class="boston-final-subtitle">Sew-in packages. Hair included. Boston. Late March. Let's go.</p>
-      <a href="https://cal.com/slayedbysarah/boston-sew-in" class="btn btn-primary boston-cta">Secure My Flawless Install</a>
+      <a href="https://cal.com/slayedbysarah1/boston-sew-in" class="btn btn-primary boston-cta">Secure My Flawless Install</a>
     </div>
   </section>
 
@@ -895,7 +915,7 @@
 
   <!-- Sticky Bottom CTA (mobile only, appears after scrolling past hero) -->
   <div class="boston-sticky-cta" id="stickyCta">
-    <a href="https://cal.com/slayedbysarah/boston-sew-in" class="btn btn-primary">Book Now — Limited Spots</a>
+    <a href="https://cal.com/slayedbysarah1/boston-sew-in" class="btn btn-primary">Book Now — Limited Spots</a>
   </div>
 
   <!-- Footer (simplified) -->

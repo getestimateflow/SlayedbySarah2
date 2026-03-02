@@ -87,11 +87,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
         let newLink;
         if (location === 'boston') {
-          // slayedbysarah/slug → slayedbysarah/boston-slug
-          newLink = link.replace('slayedbysarah/', 'slayedbysarah/boston-');
+          // slayedbysarah1/slug → slayedbysarah1/boston-slug
+          newLink = link.replace('slayedbysarah1/', 'slayedbysarah1/boston-');
         } else {
-          // slayedbysarah/boston-slug → slayedbysarah/slug
-          newLink = link.replace('slayedbysarah/boston-', 'slayedbysarah/');
+          // slayedbysarah1/boston-slug → slayedbysarah1/slug
+          newLink = link.replace('slayedbysarah1/boston-', 'slayedbysarah1/');
         }
 
         embed.dataset.calLink = newLink;
@@ -106,9 +106,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!cal) return;
 
         if (location === 'boston') {
-          bookBtn.dataset.cal = cal.replace('slayedbysarah/', 'slayedbysarah/boston-');
+          bookBtn.dataset.cal = cal.replace('slayedbysarah1/', 'slayedbysarah1/boston-');
         } else {
-          bookBtn.dataset.cal = cal.replace('slayedbysarah/boston-', 'slayedbysarah/');
+          bookBtn.dataset.cal = cal.replace('slayedbysarah1/boston-', 'slayedbysarah1/');
         }
       });
     });
@@ -168,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
     embedContainer.innerHTML = '';
 
     // Create iframe embed for Cal.com
-    // When Cal.com is set up, these links will be like: https://cal.com/slayedbysarah/service-name
+    // When Cal.com is set up, these links will be like: https://cal.com/slayedbysarah1/service-name
     const iframe = document.createElement('iframe');
     iframe.src = `https://cal.com/${calLink}?embed=true&layout=month_view&theme=light`;
     iframe.title = 'Book Appointment';

@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Show loader, load iframe
     calLoader.classList.remove('hidden');
-    calIframe.src = `https://cal.com/${calLink}?embed=true&layout=month_view&theme=light`;
+    calIframe.src = `https://cal.com/${calLink}?embed=true&layout=month_view&theme=light&name=&email=`;
   }
 
   function closeCalPopup() {

@@ -57,6 +57,67 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
+  // --- Cal.com Popup Modal ---
+  const calModal = document.getElementById('calModal');
+  const calIframe = document.getElementById('calIframe');
+  const calLoader = document.getElementById('calModalLoader');
+  const calClose = document.getElementById('calModalClose');
+
+  function openCalPopup(calLink) {
+    if (!calModal || !calIframe) return;
+
+    // Show modal
+    calModal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    // Show loader, load iframe
+    calLoader.classList.remove('hidden');
+    calIframe.src = `https://cal.com/${calLink}?embed=true&layout=month_view&theme=light`;
+  }
+
+  function closeCalPopup() {
+    if (!calModal) return;
+    calModal.classList.remove('active');
+    document.body.style.overflow = '';
+    // Clear iframe after transition
+    setTimeout(() => {
+      calIframe.src = '';
+      calLoader.classList.remove('hidden');
+    }, 300);
+  }
+
+  // Hide loader when iframe finishes loading
+  if (calIframe) {
+    calIframe.addEventListener('load', () => {
+      if (calIframe.src) calLoader.classList.add('hidden');
+    });
+  }
+
+  // Close button
+  if (calClose) calClose.addEventListener('click', closeCalPopup);
+
+  // Close on backdrop click
+  if (calModal) {
+    calModal.addEventListener('click', (e) => {
+      if (e.target === calModal) closeCalPopup();
+    });
+  }
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeCalPopup();
+  });
+
+  // Wire up all CTA buttons
+  document.querySelectorAll('.cal-popup-trigger').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const calLink = btn.dataset.calLink;
+      if (calLink) openCalPopup(calLink);
+    });
+  });
+
+
   // --- Fade-in Animations ---
   const animObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {

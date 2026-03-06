@@ -15,6 +15,21 @@ document.addEventListener('DOMContentLoaded', () => {
   handleScroll();
 
 
+  // --- Stripe Cancel Redirect Banner ---
+  if (new URLSearchParams(window.location.search).has('cancelled')) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:9999;background:#2D2226;color:#fff;text-align:center;padding:14px 40px 14px 20px;font-family:Montserrat,sans-serif;font-size:0.9rem;';
+    banner.textContent = 'Booking cancelled — no charge was made.';
+    const close = document.createElement('button');
+    close.style.cssText = 'position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;';
+    close.innerHTML = '&times;';
+    close.onclick = () => { banner.remove(); history.replaceState(null, '', window.location.pathname); };
+    banner.appendChild(close);
+    document.body.appendChild(banner);
+    setTimeout(() => banner.remove(), 8000);
+  }
+
+
   // --- Mobile Nav Toggle ---
   const navToggle = document.getElementById('navToggle');
   const navMenu = document.getElementById('navMenu');

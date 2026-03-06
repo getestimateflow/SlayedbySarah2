@@ -147,55 +147,75 @@
     <a href="/" class="success-back">Back to Home</a>
   </div>
   <script>
-    // Read booking details: localStorage (reliable) → URL params (fallback)
-    const params = new URLSearchParams(window.location.search);
-    let serviceName = '';
-    let servicePrice = 0;
-    let location = '';
-    try {
-      const stored = JSON.parse(localStorage.getItem('sbs_booking') || '{}');
-      serviceName = stored.service_name || params.get('service_name') || '';
-      servicePrice = stored.service_price || parseInt(params.get('service_price')) || 0;
-      location = stored.location || params.get('location') || '';
-      localStorage.removeItem('sbs_booking');
-    } catch (e) {
-      serviceName = params.get('service_name') || '';
-      servicePrice = parseInt(params.get('service_price')) || 0;
-      location = params.get('location') || '';
-    }
-
-    // Service name
-    const serviceEl = document.getElementById('serviceVal');
-    if (serviceName && serviceEl) {
-      serviceEl.textContent = decodeURIComponent(serviceName);
-    } else if (serviceEl) {
-      document.getElementById('serviceLine').style.display = 'none';
-    }
-
-    // Location
-    const locationEl = document.getElementById('locationVal');
+    const API = 'https://getestimateflow--estimateflow-webhooks-sbs-booking.modal.run';
     const addresses = {
       houston: 'Houston, TX',
       boston: '252 Belmont St, Brockton, MA',
     };
-    if (location && addresses[location] && locationEl) {
-      locationEl.textContent = addresses[location];
-    } else if (location && locationEl) {
-      // Capitalize unknown location as fallback
-      locationEl.textContent = location.charAt(0).toUpperCase() + location.slice(1);
-    } else if (locationEl) {
-      document.getElementById('locationLine').style.display = 'none';
+
+    function renderDetails(serviceName, servicePrice, loc) {
+      const serviceEl = document.getElementById('serviceVal');
+      if (serviceName && serviceEl) {
+        serviceEl.textContent = decodeURIComponent(serviceName);
+      } else if (serviceEl) {
+        document.getElementById('serviceLine').style.display = 'none';
+      }
+
+      const locationEl = document.getElementById('locationVal');
+      if (loc && addresses[loc] && locationEl) {
+        locationEl.textContent = addresses[loc];
+      } else if (loc && locationEl) {
+        locationEl.textContent = loc.charAt(0).toUpperCase() + loc.slice(1);
+      } else if (locationEl) {
+        document.getElementById('locationLine').style.display = 'none';
+      }
+
+      if (servicePrice > 0) {
+        const remaining = Math.max(servicePrice - 50, 0);
+        if (remaining > 0) {
+          document.getElementById('balanceLine').innerHTML =
+            `<strong>Remaining balance:</strong> $${remaining} due at appointment (cash only)`;
+        } else {
+          document.getElementById('balanceLine').innerHTML =
+            `<strong>Balance:</strong> Paid in full`;
+        }
+      }
     }
 
-    // Remaining balance
-    if (servicePrice > 0) {
-      const remaining = Math.max(servicePrice - 50, 0);
-      if (remaining > 0) {
-        document.getElementById('balanceLine').innerHTML =
-          `<strong>Remaining balance:</strong> $${remaining} due at appointment (cash only)`;
-      } else {
-        document.getElementById('balanceLine').innerHTML =
-          `<strong>Balance:</strong> Paid in full`;
+    // Try 3 sources: localStorage → URL params → Stripe session API
+    const params = new URLSearchParams(window.location.search);
+    let serviceName = '', servicePrice = 0, location = '';
+
+    try {
+      const stored = JSON.parse(localStorage.getItem('sbs_booking') || '{}');
+      serviceName = stored.service_name || '';
+      servicePrice = stored.service_price || 0;
+      location = stored.location || '';
+      localStorage.removeItem('sbs_booking');
+    } catch (e) {}
+
+    if (!serviceName) serviceName = params.get('service_name') || '';
+    if (!servicePrice) servicePrice = parseInt(params.get('service_price')) || 0;
+    if (!location) location = params.get('location') || '';
+
+    if (serviceName) {
+      renderDetails(serviceName, servicePrice, location);
+    } else {
+      // Last resort: fetch from Stripe session via backend
+      const sessionId = params.get('session_id') || '';
+      if (sessionId) {
+        fetch(API, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ action: 'get_session', session_id: sessionId }),
+        })
+          .then(r => r.json())
+          .then(data => {
+            if (data.success) {
+              renderDetails(data.service_name, parseInt(data.service_price) || 0, data.location);
+            }
+          })
+          .catch(() => {});
       }
     }
   </script>

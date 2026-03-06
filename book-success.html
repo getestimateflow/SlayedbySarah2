@@ -153,7 +153,7 @@
       boston: '252 Belmont St, Brockton, MA',
     };
 
-    function renderDetails(serviceName, servicePrice, loc) {
+    function renderDetails(serviceName, servicePrice, bookingLoc) {
       const serviceEl = document.getElementById('serviceVal');
       if (serviceName && serviceEl) {
         serviceEl.textContent = decodeURIComponent(serviceName);
@@ -162,10 +162,10 @@
       }
 
       const locationEl = document.getElementById('locationVal');
-      if (loc && addresses[loc] && locationEl) {
-        locationEl.textContent = addresses[loc];
-      } else if (loc && locationEl) {
-        locationEl.textContent = loc.charAt(0).toUpperCase() + loc.slice(1);
+      if (bookingLoc && addresses[bookingLoc] && locationEl) {
+        locationEl.textContent = addresses[bookingLoc];
+      } else if (bookingLoc && locationEl) {
+        locationEl.textContent = bookingLoc.charAt(0).toUpperCase() + bookingLoc.slice(1);
       } else if (locationEl) {
         document.getElementById('locationLine').style.display = 'none';
       }
@@ -184,22 +184,22 @@
 
     // Try 3 sources: localStorage → URL params → Stripe session API
     const params = new URLSearchParams(window.location.search);
-    let serviceName = '', servicePrice = 0, location = '';
+    let serviceName = '', servicePrice = 0, bookingLoc = '';
 
     try {
       const stored = JSON.parse(localStorage.getItem('sbs_booking') || '{}');
       serviceName = stored.service_name || '';
       servicePrice = stored.service_price || 0;
-      location = stored.location || '';
+      bookingLoc = stored.location || '';
       localStorage.removeItem('sbs_booking');
     } catch (e) {}
 
     if (!serviceName) serviceName = params.get('service_name') || '';
     if (!servicePrice) servicePrice = parseInt(params.get('service_price')) || 0;
-    if (!location) location = params.get('location') || '';
+    if (!bookingLoc) bookingLoc = params.get('location') || '';
 
     if (serviceName) {
-      renderDetails(serviceName, servicePrice, location);
+      renderDetails(serviceName, servicePrice, bookingLoc);
     } else {
       // Last resort: fetch from Stripe session via backend
       const sessionId = params.get('session_id') || '';

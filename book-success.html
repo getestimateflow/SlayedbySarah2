@@ -147,10 +147,22 @@
     <a href="/" class="success-back">Back to Home</a>
   </div>
   <script>
+    // Read booking details: localStorage (reliable) → URL params (fallback)
     const params = new URLSearchParams(window.location.search);
-    const serviceName = params.get('service_name') || '';
-    const servicePrice = parseInt(params.get('service_price')) || 0;
-    const location = params.get('location') || '';
+    let serviceName = '';
+    let servicePrice = 0;
+    let location = '';
+    try {
+      const stored = JSON.parse(localStorage.getItem('sbs_booking') || '{}');
+      serviceName = stored.service_name || params.get('service_name') || '';
+      servicePrice = stored.service_price || parseInt(params.get('service_price')) || 0;
+      location = stored.location || params.get('location') || '';
+      localStorage.removeItem('sbs_booking');
+    } catch (e) {
+      serviceName = params.get('service_name') || '';
+      servicePrice = parseInt(params.get('service_price')) || 0;
+      location = params.get('location') || '';
+    }
 
     // Service name
     const serviceEl = document.getElementById('serviceVal');

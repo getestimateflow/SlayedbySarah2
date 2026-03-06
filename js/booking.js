@@ -769,6 +769,14 @@ const SBSBooking = (() => {
       });
       const data = await resp.json();
       if (data.success && data.checkout_url) {
+        // Save booking details for success page (URL params can be unreliable across redirects)
+        try {
+          localStorage.setItem('sbs_booking', JSON.stringify({
+            service_name: state.serviceName,
+            service_price: state.servicePrice,
+            location: state.location,
+          }));
+        } catch (e) { /* localStorage not available, fall back to URL params */ }
         window.location.href = data.checkout_url;
       } else {
         alert('Something went wrong. Please try again.');

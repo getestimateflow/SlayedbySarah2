@@ -156,7 +156,7 @@
     const serviceEl = document.getElementById('serviceVal');
     if (serviceName && serviceEl) {
       serviceEl.textContent = decodeURIComponent(serviceName);
-    } else {
+    } else if (serviceEl) {
       document.getElementById('serviceLine').style.display = 'none';
     }
 
@@ -164,19 +164,27 @@
     const locationEl = document.getElementById('locationVal');
     const addresses = {
       houston: 'Houston, TX',
-      boston: '252 Belmont Street, Brockton, MA 02301',
+      boston: '252 Belmont St, Brockton, MA',
     };
     if (location && addresses[location] && locationEl) {
       locationEl.textContent = addresses[location];
+    } else if (location && locationEl) {
+      // Capitalize unknown location as fallback
+      locationEl.textContent = location.charAt(0).toUpperCase() + location.slice(1);
     } else if (locationEl) {
       document.getElementById('locationLine').style.display = 'none';
     }
 
     // Remaining balance
-    if (servicePrice && servicePrice > 50) {
-      const remaining = servicePrice - 50;
-      document.getElementById('balanceLine').innerHTML =
-        `<strong>Remaining balance:</strong> $${remaining} due at appointment (cash only)`;
+    if (servicePrice > 0) {
+      const remaining = Math.max(servicePrice - 50, 0);
+      if (remaining > 0) {
+        document.getElementById('balanceLine').innerHTML =
+          `<strong>Remaining balance:</strong> $${remaining} due at appointment (cash only)`;
+      } else {
+        document.getElementById('balanceLine').innerHTML =
+          `<strong>Balance:</strong> Paid in full`;
+      }
     }
   </script>
 </body>

@@ -115,126 +115,35 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // --- Service Card Expansion & Cal.com Embed ---
+  // --- Service Card: Book Now → Booking Modal ---
+  // Uses SBSBooking module (booking.js) instead of Cal.com iframe
   const bookButtons = document.querySelectorAll('.btn-book');
 
   bookButtons.forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
+
       const card = button.closest('.service-card');
-      const wasActive = card.classList.contains('active');
+      const serviceName = card.querySelector('.service-name')?.textContent?.trim() || '';
+      const priceText = card.querySelector('.service-price')?.textContent?.trim() || '';
+      const servicePrice = parseInt(priceText.replace(/[^0-9]/g, '')) || 0;
 
-      // Close all other open cards in this category
-      const parentCategory = card.closest('.service-category');
-      parentCategory.querySelectorAll('.service-card.active').forEach(openCard => {
-        if (openCard !== card) {
-          openCard.classList.remove('active');
-        }
-      });
+      // Extract slug from data-cal attribute (e.g., "slayedbysarah1/16-luxury-install")
+      const calAttr = button.dataset.cal || '';
+      const slug = calAttr.replace('slayedbysarah1/', '');
 
-      // Toggle this card
-      card.classList.toggle('active');
-
-      // If we just opened the card, load the Cal.com embed and scroll to it
-      if (!wasActive) {
-        loadCalEmbed(card);
-
-        // Wait for closing card's max-height transition to settle before scrolling
-        setTimeout(() => {
-          const headerHeight = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height'));
-          const cardTop = card.getBoundingClientRect().top + window.scrollY - headerHeight - 20;
-          window.scrollTo({ top: cardTop, behavior: 'smooth' });
-        }, 350);
+      // Open booking modal
+      if (typeof SBSBooking !== 'undefined') {
+        SBSBooking.open({
+          slug: slug,
+          serviceName: serviceName,
+          servicePrice: servicePrice,
+          location: currentLocation,
+        });
       }
     });
   });
-
-
-  /**
-   * Load Cal.com inline embed into a service card
-   * Replace the placeholder with an actual Cal.com embed
-   */
-  function loadCalEmbed(card) {
-    const embedContainer = card.querySelector('.cal-embed');
-    if (!embedContainer || embedContainer.dataset.loaded === 'true') return;
-
-    const calLink = embedContainer.dataset.calLink;
-    if (!calLink) return;
-
-    // Mark as loaded so we don't reload
-    embedContainer.dataset.loaded = 'true';
-
-    // Clear placeholder
-    embedContainer.innerHTML = '';
-
-    // Create iframe embed for Cal.com
-    // When Cal.com is set up, these links will be like: https://cal.com/slayedbysarah1/service-name
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://cal.com/${calLink}?embed=true&layout=month_view&theme=light`;
-    iframe.title = 'Book Appointment';
-    iframe.style.width = '100%';
-    iframe.style.minHeight = '600px';
-    iframe.style.border = 'none';
-    iframe.style.borderRadius = '10px';
-    iframe.loading = 'lazy';
-    iframe.allow = 'payment';
-
-    // Show a loading state while iframe loads
-    const loader = document.createElement('div');
-    loader.className = 'cal-loading';
-    loader.innerHTML = `
-      <div class="cal-loading-spinner"></div>
-      <p>Loading booking calendar...</p>
-    `;
-    embedContainer.appendChild(loader);
-    embedContainer.appendChild(iframe);
-
-    // Remove loader when iframe is ready
-    iframe.addEventListener('load', () => {
-      if (loader.parentNode) {
-        loader.remove();
-      }
-    });
-
-    // Add loading spinner styles if not already present
-    if (!document.getElementById('cal-loading-styles')) {
-      const style = document.createElement('style');
-      style.id = 'cal-loading-styles';
-      style.textContent = `
-        .cal-loading {
-          position: absolute;
-          inset: 0;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          background: var(--color-bg-warm);
-          z-index: 1;
-        }
-        .cal-loading p {
-          font-size: 0.85rem;
-          color: var(--color-text-muted);
-          font-weight: 500;
-        }
-        .cal-loading-spinner {
-          width: 32px;
-          height: 32px;
-          border: 3px solid var(--color-border);
-          border-top-color: var(--color-primary);
-          border-radius: 50%;
-          animation: calSpin 0.8s linear infinite;
-        }
-        @keyframes calSpin {
-          to { transform: rotate(360deg); }
-        }
-        .cal-embed {
-          position: relative;
-        }
-      `;
-      document.head.appendChild(style);
-    }
-  }
 
 
   // --- Gallery Video Play/Pause ---

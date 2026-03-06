@@ -756,7 +756,6 @@ const SBSBooking = (() => {
       email: formData.get('email'),
       phone: formData.get('phone'),
       notes: formData.get('notes') || '',
-      test_mode: true, // TEMP: remove after testing
     };
 
     if (btn) { btn.disabled = true; btn.textContent = 'Processing...'; }

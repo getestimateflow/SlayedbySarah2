@@ -17,6 +17,7 @@ const SBSBooking = (() => {
   'use strict';
 
   const API = 'https://getestimateflow--estimateflow-webhooks-sbs-booking.modal.run';
+  const TEST_MODE = new URLSearchParams(window.location.search).get('test') === 'true';
 
   const TIME_SLOTS = [
     { display: '9:00 AM',  hour24: '09:00' },
@@ -756,6 +757,7 @@ const SBSBooking = (() => {
       email: formData.get('email'),
       phone: formData.get('phone'),
       notes: formData.get('notes') || '',
+      test_mode: TEST_MODE,
     };
 
     if (btn) { btn.disabled = true; btn.textContent = 'Processing...'; }
@@ -789,6 +791,14 @@ const SBSBooking = (() => {
     }
   }
 
+
+  // Show test mode banner if active
+  if (TEST_MODE) {
+    const banner = document.createElement('div');
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#fff3cd;color:#856404;text-align:center;padding:8px;font-size:0.85rem;font-weight:600;font-family:sans-serif;border-bottom:2px solid #ffc107;';
+    banner.textContent = 'STRIPE TEST MODE — Use card 4242 4242 4242 4242';
+    document.body.prepend(banner);
+  }
 
   return { open, close };
 })();

@@ -59,6 +59,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- Config ---
   const API_BOOKING = 'https://getestimateflow--estimateflow-webhooks-sbs-booking.modal.run';
+  const TEST_MODE = new URLSearchParams(window.location.search).get('test') === 'true';
 
   // --- Data ---
   const PACKAGES = [
@@ -359,7 +360,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const resp = await fetch(API_BOOKING, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ action: 'create_checkout', ...payload }),
+          body: JSON.stringify({ action: 'create_checkout', test_mode: TEST_MODE, ...payload }),
         });
         const data = await resp.json();
 
@@ -418,5 +419,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const style = document.createElement('style');
   style.textContent = '.visible { opacity: 1 !important; transform: translateY(0) !important; }';
   document.head.appendChild(style);
+
+  // Show test mode banner if active
+  if (TEST_MODE) {
+    const testBanner = document.createElement('div');
+    testBanner.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:99999;background:#fff3cd;color:#856404;text-align:center;padding:8px;font-size:0.85rem;font-weight:600;font-family:sans-serif;border-bottom:2px solid #ffc107;';
+    testBanner.textContent = 'STRIPE TEST MODE — Use card 4242 4242 4242 4242';
+    document.body.prepend(testBanner);
+  }
 
 });

@@ -15,6 +15,37 @@ document.addEventListener('DOMContentLoaded', () => {
   handleScroll();
 
 
+  // --- Boston Trip Banner (temporary — remove after March 28) ---
+  if (!window.location.pathname.startsWith('/boston') && !sessionStorage.getItem('sbs_boston_dismissed')) {
+    const bostonBanner = document.createElement('a');
+    bostonBanner.href = '/boston';
+    bostonBanner.id = 'bostonBanner';
+    bostonBanner.style.cssText = 'display:block;position:fixed;top:0;left:0;right:0;z-index:10000;background:linear-gradient(135deg,#C48B7C,#B76E79);color:#fff;text-align:center;padding:12px 40px 12px 20px;font-family:Montserrat,sans-serif;font-size:0.85rem;font-weight:500;text-decoration:none;letter-spacing:0.3px;cursor:pointer;';
+    bostonBanner.innerHTML = 'Sarah\u2019s in Boston March 23\u201328! Book your sew-in \u2192';
+    const closeBos = document.createElement('button');
+    closeBos.style.cssText = 'position:absolute;right:14px;top:50%;transform:translateY(-50%);background:none;border:none;color:#fff;font-size:1.2rem;cursor:pointer;opacity:0.7;';
+    closeBos.innerHTML = '&times;';
+    closeBos.onclick = (e) => {
+      e.preventDefault(); e.stopPropagation();
+      bostonBanner.remove();
+      document.body.style.marginTop = '';
+      if (nav) nav.style.top = '';
+      window.removeEventListener('resize', pushContent);
+      sessionStorage.setItem('sbs_boston_dismissed', '1');
+    };
+    bostonBanner.appendChild(closeBos);
+    document.body.appendChild(bostonBanner);
+    // Push nav and body content below the banner (measure actual height)
+    const pushContent = () => {
+      const bannerH = bostonBanner.offsetHeight + 'px';
+      document.body.style.marginTop = bannerH;
+      if (nav) nav.style.top = bannerH;
+    };
+    pushContent();
+    window.addEventListener('resize', pushContent);
+  }
+
+
   // --- Stripe Cancel Redirect Banner ---
   if (new URLSearchParams(window.location.search).has('cancelled')) {
     const banner = document.createElement('div');

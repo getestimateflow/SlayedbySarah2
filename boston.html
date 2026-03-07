@@ -1366,6 +1366,14 @@
     </div>
   </section>
 
+  <!-- Cross-link to main site -->
+  <div style="text-align:center;padding:24px 20px 32px;font-family:'Montserrat',sans-serif;">
+    <p style="font-size:0.88rem;color:#6B5A5E;line-height:1.6;margin:0;">
+      Not looking for a sew-in? Check out all of Sarah's services at
+      <a href="/" style="color:#B76E79;font-weight:500;text-decoration:underline;">slayedbysarah.com</a>
+    </p>
+  </div>
+
   <!-- Sticky Bottom CTA (mobile only, appears after scrolling past hero) -->
   <div class="boston-sticky-cta" id="stickyCta">
     <button class="btn btn-primary cal-popup-trigger" data-cal-link="slayedbysarah1/boston-sew-in">Book Now — Limited Spots</button>
@@ -1458,6 +1466,28 @@
   </div>
 
   <script src="js/boston.js?v=9"></script>
+  <!-- Soft popup: other services (20s delay) -->
+  <div id="servicesPopup" style="display:none;position:fixed;bottom:24px;right:24px;z-index:9000;max-width:300px;background:#fff;border-radius:14px;box-shadow:0 8px 32px rgba(0,0,0,0.12);padding:20px 22px;font-family:'Montserrat',sans-serif;transform:translateY(20px);opacity:0;transition:transform 0.4s ease,opacity 0.4s ease;">
+    <button onclick="document.getElementById('servicesPopup').style.display='none';sessionStorage.setItem('sbs_popup_dismissed','1')" style="position:absolute;top:10px;right:12px;background:none;border:none;font-size:1.2rem;color:#999;cursor:pointer;line-height:1;">&times;</button>
+    <p style="margin:0 0 6px;font-size:0.82rem;color:#8C6B6B;font-weight:600;letter-spacing:0.5px;text-transform:uppercase;">Not just sew-ins</p>
+    <p style="margin:0 0 14px;font-size:0.88rem;color:#4A3A3E;line-height:1.5;">Sarah also offers installs, coloring, styling & more.</p>
+    <a href="/" style="display:inline-block;font-size:0.82rem;font-weight:600;color:#B76E79;text-decoration:none;letter-spacing:0.3px;">View all services &rarr;</a>
+  </div>
+  <script>
+    if (!sessionStorage.getItem('sbs_popup_dismissed')) {
+      setTimeout(() => {
+        const popup = document.getElementById('servicesPopup');
+        popup.style.display = 'block';
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            popup.style.transform = 'translateY(0)';
+            popup.style.opacity = '1';
+          });
+        });
+      }, 15000);
+    }
+  </script>
+
 </body>
 
 </html>
